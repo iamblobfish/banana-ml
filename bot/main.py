@@ -15,7 +15,7 @@ bot.
 
 import logging
 
-from telebot import apihelper
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Enable logging
@@ -50,11 +50,6 @@ def main():
     """Start the bot."""
     print('Start')
     updater = Updater("1227949969:AAF9NVc1rSX2XKBtlEGdYNednNAH0Y7-OPc", use_context=True)
-    apihelper.proxy = {
-            'http': '47.52.193.158:3128',
-            'https': '47.52.193.158:3128',
-        }
-
         # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
