@@ -6,7 +6,7 @@ import numpy as np
 import torchvision
 import torch.nn as nn
 
-CLASS_NAMES = {0: 'paper', 1: 'rock', 2: 'scissors'}
+CLASS_NAMES = {0: 'Бумага', 1: 'Камень', 2: 'Ножницы'}
 
 class Flatten(nn.Module):
     def forward(self, input):
