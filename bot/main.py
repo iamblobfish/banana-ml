@@ -78,7 +78,7 @@ def get_photo(update, context):
 def main():
     """Start the bot."""
     print('Start')
-    updater = Updater("1227949969:AAF9NVc1rSX2XKBtlEGdYNednNAH0Y7-OPc", use_context=True)
+    updater = Updater("1247859285:AAHSu4GPAOFVrpA8ZB_dJUnibLuE3UbSio4", use_context=True)
         # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
