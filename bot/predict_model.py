@@ -6,7 +6,6 @@ import torchvision
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
 from matplotlib.pyplot import imread
 from skimage.transform import resize
 
