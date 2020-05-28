@@ -37,8 +37,8 @@ def start(update, context):
     update.message.reply_text('Hi, {}!'.format(name))
     update.message.reply_text('My name is banana-ml bot. I can make your photos look like \
                               the famous pictures! Please, choose the option: \n \
-                              - "1" is for "The great wave off Kaganawa" by K. Hokusai style; \n \
-                              - "2" is for "The Scream" by E. Munk style; \n \
+                              - "1" is for Universe style; \n \
+                              - "2" is for Sunset style; \n \
                               - "3" is for "Starry night" by V. Van Gogh style.')
 
 
