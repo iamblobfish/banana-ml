@@ -4,6 +4,23 @@ import torch
 import numpy as np
 import torchvision
 import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+from matplotlib.pyplot import imread
+from skimage.transform import resize
+
+from torch.autograd import Variable
+
+# desired size of the output image
+imsize = 256   # REDUCE THIS TO 128 IF THE OPTIMIZATION IS TOO SLOW FOR YOU
+def image_loader(image_name):
+    image = resize(imread(image_name), [imsize, imsize])
+    image = image.transpose([2,0,1]) / image.max()
+    image = Variable(dtype(image))
+    # fake batch dimension required to fit network's input dimensions
+    image = image.unsqueeze(0)
+    return image
 
 style_img = image_loader("starry_night.jpg").type(dtype)
 
