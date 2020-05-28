@@ -98,7 +98,7 @@ class Predictor:
                                                 relu_15= ReLU(inplace=True),
                                                 conv_16= Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
                                                 relu_16= ReLU(inplace=True),
-                                                pool_17= MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)))
+                                                pool_17= MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False))
 
         self.model.load_state_dict(torch.load(path))
 
