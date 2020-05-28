@@ -11,7 +11,8 @@ from skimage.transform import resize
 
 style_img = Image.open("starry_night.jpg").convert('RGB').resize((300, 300), Image.ANTIALIAS)
 style_img = torch.tensor(np.transpose(np.array(style_img), (2, 0, 1))).unsqueeze(0)
-
+import torchvision.models as models
+cnn = models.vgg19(pretrained=True).features
 
 class ContentLoss(nn.Module):
 
@@ -62,51 +63,54 @@ class StyleLoss(nn.Module):
 
 class Predictor:
     def __init__(self, path='trained_model_dict'):
-        self.model = self.model = nn.Sequential(conv_1= nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 
-                                                style_loss_1= StyleLoss(), 
-                                                relu_1= nn.ReLU(inplace=True), 
-                                                conv_2= nn.Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                style_loss_2= StyleLoss(),
-                                                relu_2= nn.ReLU(inplace=True),
-                                                pool_3= nn.MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False),
-                                                conv_3= nn.Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                style_loss_3= StyleLoss(),
-                                                relu_3= nn.ReLU(inplace=True),
-                                                conv_4= nn.Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                content_loss_4= ContentLoss(),
-                                                style_loss_4= StyleLoss(),
-                                                relu_4= nn.ReLU(inplace=True),
-                                                pool_5= nn.MaxPool2d(kernel_si,ze=2, stride=2, padding=0, dilation=1, ceil_mode=False),
-                                                conv_5= nn.Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                style_loss_5= StyleLoss(),
-                                                relu_5= nn.ReLU(inplace=True),
-                                                conv_6= nn.Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_6= nn.ReLU(inplace=True),
-                                                conv_7= nn.Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_7= nn.ReLU(inplace=True),
-                                                conv_8= nn.Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_8= nn.ReLU(inplace=True),
-                                                pool_9= nn.MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False),
-                                                conv_9= nn.Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_9= nn.ReLU(inplace=True),
-                                                conv_10= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_10= nn.ReLU(inplace=True),
-                                                conv_11= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_11= nn.ReLU(inplace=True),
-                                                conv_12= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_12= nn.ReLU(inplace=True),
-                                                pool_13= nn.MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False),
-                                                conv_13= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_13= nn.ReLU(inplace=True),
-                                                conv_14= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_14= nn.ReLU(inplace=True),
-                                                conv_15= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_15= nn.ReLU(inplace=True),
-                                                conv_16= nn.Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-                                                relu_16= nn.ReLU(inplace=True),
-                                                pool_17= nn.MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False))
+        content_losses = []
+        style_losses = []
+        self.model = nn.Sequential()
+        i = 1
+        for layer in list(cnn):
+                if isinstance(layer, nn.Conv2d):
+                    name = "conv_" + str(i)
+                    self.model.add_module(name, layer)
 
-        self.model.load_state_dict(torch.load(path))
+                    if name in content_layers:
+                        target = model(content_img).clone()
+                        content_loss = ContentLoss(target, 1)
+                        self.model.add_module("content_loss_" + str(i), content_loss)
+                        content_losses.append(content_loss)
+
+                    if name in style_layers:
+                        # add style loss:
+                        target_feature = model(style_img).clone()
+                        target_feature_gram = gram_matrix(target_feature)
+                        style_loss = StyleLoss(target_feature_gram, 1000)
+                        self.model.add_module("style_loss_" + str(i), style_loss)
+                        style_losses.append(style_loss)
+
+                if isinstance(layer, nn.ReLU):
+                    name = "relu_" + str(i)
+                    self.model.add_module(name, layer)
+
+                    if name in content_layers:
+                        # add content loss:
+                        target = model(content_img).clone()
+                        content_loss = ContentLoss(target, 1)
+                        self.model.add_module("content_loss_" + str(i), content_loss)
+                        content_losses.append(content_loss)
+
+                    if name in style_layers:
+                        # add style loss:
+                        target_feature = model(style_img).clone()
+                        target_feature_gram = gram_matrix(target_feature)
+                        style_loss = StyleLoss(target_feature_gram, 1000)
+                        self.model.add_module("style_loss_" + str(i), style_loss)
+                        style_losses.append(style_loss)
+
+                    i += 1
+
+                if isinstance(layer, nn.MaxPool2d):
+                    name = "pool_" + str(i)
+                    self.model.add_module(name, layer)
+                    self.model.load_state_dict(torch.load(path))
 
     def get_image_predict(self, img_path='img_path.jpg'):
         style_losses = [StyleLoss(), StyleLoss(), StyleLoss(), StyleLoss(), StyleLoss()]
