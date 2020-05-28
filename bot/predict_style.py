@@ -14,7 +14,7 @@ from matplotlib.pyplot import imread
 from skimage.transform import resize
 
 def image_loader(image_name):
-    image = resize(imread(image_name), [512, 512])
+    image = resize(imread(image_name), [128, 128])
     image = image.transpose([2,0,1]) / image.max()
     image = Variable(torch.FloatTensor(image))
     # fake batch dimension required to fit network's input dimensions
