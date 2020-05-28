@@ -37,9 +37,9 @@ def start(update, context):
     update.message.reply_text('Hi, {}!'.format(name))
     update.message.reply_text('My name is banana-ml bot. I can make your photos look like \
                               the famous pictures! Please, choose the option: \n \
-                              - "1" is for "The great wave off Kaganawa" by K. Hokusai style; \n \
-                              - "2" is for "Universe" style; \n \
-                              - "3" is for "Starry night" by V. Van Gogh style.')
+                              - "Sunset" is for "Sunset" style; \n \
+                              - "Universe" is for "Universe" style; \n \
+                              - "Night" is for "Starry night" style.')
 
 
 def help(update, context):
@@ -79,13 +79,13 @@ def get_photo(update, context):
 
     # send photo
     global option
-    if option == "1":
+    if option == "Sunset":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "1")
-    elif option == "2":
+    elif option == "Universe":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "2")
-    elif option == "3":
+    elif option == "Night":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "3")
     res_photo = open('res_photo.jpg', 'rb')
