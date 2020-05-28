@@ -77,9 +77,9 @@ class Predictor:
         img_tensor = image_loader(img_path).type(torch.FloatTensor)
         
         if option == "1":
-            style_img = image_loader("wave.jpg").type(torch.FloatTensor)
+            style_img = image_loader("sunset.jpg").type(torch.FloatTensor)
         if option == "2":
-            style_img = image_loader("the_scream.jpg").type(torch.FloatTensor)
+            style_img = image_loader("universe.jpg").type(torch.FloatTensor)
         if option == "3":
             style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
         
