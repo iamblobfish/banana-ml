@@ -9,19 +9,9 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import imread
 from skimage.transform import resize
 
-from torch.autograd import Variable
+style_img = Image.open("starry_night.jpg").convert('RGB').resize((300, 300), Image.ANTIALIAS)
+style_img = torch.tensor(np.transpose(np.array(style_img), (2, 0, 1))).unsqueeze(0)
 
-# desired size of the output image
-imsize = 256   # REDUCE THIS TO 128 IF THE OPTIMIZATION IS TOO SLOW FOR YOU
-def image_loader(image_name):
-    image = resize(imread(image_name), [imsize, imsize])
-    image = image.transpose([2,0,1]) / image.max()
-    image = Variable(dtype(image))
-    # fake batch dimension required to fit network's input dimensions
-    image = image.unsqueeze(0)
-    return image
-
-style_img = image_loader("starry_night.jpg").type(dtype)
 
 class ContentLoss(nn.Module):
 
