@@ -14,7 +14,7 @@ from matplotlib.pyplot import imread
 from skimage.transform import resize
 
 def image_loader(image_name):
-    image = resize(imread(image_name), [256, 256])
+    image = resize(imread(image_name), [128, 128])
     image = image.transpose([2,0,1]) / image.max()
     image = Variable(torch.FloatTensor(image))
     # fake batch dimension required to fit network's input dimensions
@@ -89,7 +89,7 @@ class Predictor:
         if option == "6":
             style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
-        content_weight = 1            # coefficient for content loss
+        content_weight = 20            # coefficient for content loss
         style_weight = 1000           # coefficient for style loss
         content_layers = ('conv_4',)  # use these layers for content loss
         style_layers = ('conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5')
