@@ -5,8 +5,7 @@ import numpy as np
 import torchvision
 import torch.nn as nn
 
-!rm Practical_DL* -rf && wget https://github.com/yandexdataschool/Practical_DL/archive/spring20.zip && unzip spring20.zip && mv */seminar06-style-transfer/images .
-style_img = image_loader("images/wave.jpg").type(dtype)
+style_img = image_loader("starry_night.jpg").type(dtype)
 
 class ContentLoss(nn.Module):
 
