@@ -37,9 +37,9 @@ def start(update, context):
     update.message.reply_text('Hi, {}!'.format(name))
     update.message.reply_text('My name is banana-ml bot. I can make your photos look like \
                               the famous pictures! Please, choose the option: \n \
-                              - "Sunset" is for "Sunset" style; \n \
-                              - "Universe" is for "Universe" style; \n \
-                              - "Night" is for "Starry night" style.')
+                              - "1" is for "The great wave off Kaganawa" by K. Hokusai style; \n \
+                              - "2" is for "The Scream" by E. Munk style; \n \
+                              - "3" is for "Starry night" by V. Van Gogh style.')
 
 
 def help(update, context):
@@ -50,6 +50,12 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
+def action(update, context):
+    """Send a message when the command /help is issued."""
+    update.message.reply_text('Здесь будет экшн')
+    text_caps = ' '.join(context.args).upper()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
+
 def echo(update, context):
     """Echo the user message."""
     update.message.reply_text(update.message.text)
@@ -58,12 +64,6 @@ def get_style(update, context):
     global option
     option = update.message.text
     update.message.reply_text('Good! Now send me a pic :)')
-    
-def action(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Здесь будет экшн')
-    text_caps = ' '.join(context.args).upper()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
     
 def get_photo(update, context):
     """Echo the user message."""
@@ -79,13 +79,13 @@ def get_photo(update, context):
 
     # send photo
     global option
-    if option == "Sunset":
+    if option == "1":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "1")
-    elif option == "Universe":
+    elif option == "2":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "2")
-    elif option == "Night":
+    elif option == "3":
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "3")
     res_photo = open('res_photo.jpg', 'rb')
@@ -94,7 +94,7 @@ def get_photo(update, context):
 def main():
     """Start the bot."""
     print('Start')
-    updater = Updater("1247859285:AAHSu4GPAOFVrpA8ZB_dJUnibLuE3UbSio4", use_context=True)
+    updater = Updater("1094022722:AAFwhB5cVoQ4xX9OalG6mtxyal7H4dX8eIw", use_context=True)
         # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
@@ -112,10 +112,7 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
-    updater.start_t
     updater.start_polling()
-
-polling()
 
     updater.idle()
     print('Finish')
