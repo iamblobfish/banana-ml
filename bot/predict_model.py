@@ -66,6 +66,8 @@ class Predictor:
         self.content_losses = []
         self.style_losses = []
         self.model = nn.Sequential()
+        content_layers = ('conv_4',)  # use these layers for content loss
+        style_layers = ('conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5') 
         i = 1
         for layer in list(cnn):
                 if isinstance(layer, nn.Conv2d):
