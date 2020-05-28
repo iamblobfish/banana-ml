@@ -83,9 +83,11 @@ class Predictor:
         if option == "3":
             style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
         if option == "4":
-            style_img = image_loader("zhenshhina.jpg").type(torch.FloatTensor)
+            style_img = image_loader("matiss.jpg").type(torch.FloatTensor)
         if option == "5":
             style_img = image_loader("Simpsons.jpg").type(torch.FloatTensor)
+        if option == "6":
+            style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
         content_weight = 1            # coefficient for content loss
         style_weight = 1000           # coefficient for style loss
