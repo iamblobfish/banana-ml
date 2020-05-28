@@ -59,6 +59,12 @@ def get_style(update, context):
     option = update.message.text
     update.message.reply_text('Good! Now send me a pic :)')
     
+def action(update, context):
+    """Send a message when the command /help is issued."""
+    update.message.reply_text('Здесь будет экшн')
+    text_caps = ' '.join(context.args).upper()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
+    
 def get_photo(update, context):
     """Echo the user message."""
     user = update.message.from_user
@@ -83,7 +89,7 @@ def get_photo(update, context):
         predictor = Predictor()
         predictor.get_image_predict('user_photo.jpg', "3")
     res_photo = open('res_photo.jpg', 'rb')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo='user_photo.jpg')
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=res_photo)
 
 def main():
     """Start the bot."""
@@ -106,7 +112,17 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
+    updater.start_t
     updater.start_polling()
+
+    updater.idle()
+    print('Finish')
+
+option = ""
+
+if __name__ == '__main__':
+    main()
+polling()
 
     updater.idle()
     print('Finish')
