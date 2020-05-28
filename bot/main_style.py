@@ -115,13 +115,6 @@ def main():
     updater.start_t
     updater.start_polling()
 
-    updater.idle()
-    print('Finish')
-
-option = ""
-
-if __name__ == '__main__':
-    main()
 polling()
 
     updater.idle()
