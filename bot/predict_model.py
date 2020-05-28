@@ -63,8 +63,8 @@ class StyleLoss(nn.Module):
 
 class Predictor:
     def __init__(self, path='trained_model_dict'):
-        content_losses = []
-        style_losses = []
+        self.content_losses = []
+        self.style_losses = []
         self.model = nn.Sequential()
         i = 1
         for layer in list(cnn):
@@ -73,18 +73,18 @@ class Predictor:
                     self.model.add_module(name, layer)
 
                     if name in content_layers:
-                        target = model(content_img).clone()
+                        target = self.model(content_img).clone()
                         content_loss = ContentLoss(target, 1)
                         self.model.add_module("content_loss_" + str(i), content_loss)
-                        content_losses.append(content_loss)
+                        self.content_losses.append(content_loss)
 
                     if name in style_layers:
                         # add style loss:
-                        target_feature = model(style_img).clone()
+                        target_feature = self.model(style_img).clone()
                         target_feature_gram = gram_matrix(target_feature)
                         style_loss = StyleLoss(target_feature_gram, 1000)
                         self.model.add_module("style_loss_" + str(i), style_loss)
-                        style_losses.append(style_loss)
+                        self.style_losses.append(style_loss)
 
                 if isinstance(layer, nn.ReLU):
                     name = "relu_" + str(i)
@@ -92,18 +92,18 @@ class Predictor:
 
                     if name in content_layers:
                         # add content loss:
-                        target = model(content_img).clone()
+                        target = self.model(content_img).clone()
                         content_loss = ContentLoss(target, 1)
                         self.model.add_module("content_loss_" + str(i), content_loss)
-                        content_losses.append(content_loss)
+                        self.content_losses.append(content_loss)
 
                     if name in style_layers:
                         # add style loss:
-                        target_feature = model(style_img).clone()
+                        target_feature = self.model(style_img).clone()
                         target_feature_gram = gram_matrix(target_feature)
                         style_loss = StyleLoss(target_feature_gram, 1000)
                         self.model.add_module("style_loss_" + str(i), style_loss)
-                        style_losses.append(style_loss)
+                        self.style_losses.append(style_loss)
 
                     i += 1
 
@@ -113,7 +113,6 @@ class Predictor:
                     self.model.load_state_dict(torch.load(path))
 
     def get_image_predict(self, img_path='img_path.jpg'):
-        style_losses = [StyleLoss(), StyleLoss(), StyleLoss(), StyleLoss(), StyleLoss()]
         optimizer = torch.optim.LBFGS([input_image])
         image = Image.open(img_path).convert('RGB').resize((300, 300), Image.ANTIALIAS)
         img_tensor = torch.tensor(np.transpose(np.array(image), (2, 0, 1))).unsqueeze(0)
@@ -122,12 +121,12 @@ class Predictor:
         for i in range(300):
           # correct the values of updated input image
           input_image.data.clamp_(0, 1)
-          model(input_image)
+          self.model(input_image)
           style_score = 0
           content_score = 0
-          for sl in style_losses:
+          for sl in self.style_losses:
               style_score += sl.backward()
-          for cl in content_losses:
+          for cl in self.content_losses:
               content_score += cl.backward()
 
           loss = style_score + content_score
