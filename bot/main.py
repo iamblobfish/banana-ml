@@ -73,7 +73,7 @@ def get_photo(update, context):
     # send photo
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=new_photo)
     result = predictor.get_image_predict('user_photo.jpg')
-    context.bot.send_message(chat_id=update.effective_chat.id, text=result)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=result)
 
 def main():
     """Start the bot."""
