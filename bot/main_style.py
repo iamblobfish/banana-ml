@@ -66,6 +66,10 @@ def echo(update, context):
 def get_style(update, context):
     global option
     option = update.message.text
+    update.message.reply_text('Good! Now input coef')
+def get_coef(update, context):
+    global coef
+    coef = update.message.text
     update.message.reply_text('Good! Now send me a pic :)')
     
 def get_photo(update, context):
@@ -84,22 +88,22 @@ def get_photo(update, context):
     global option
     if option == "1":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "1")
+        predictor.get_image_predict('user_photo.jpg', "1", int(coef))
     elif option == "2":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "2")
+        predictor.get_image_predict('user_photo.jpg', "2", int(coef))
     elif option == "3":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "3")
+        predictor.get_image_predict('user_photo.jpg', "3", int(coef))
     elif option == "4":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "4")
+        predictor.get_image_predict('user_photo.jpg', "4", int(coef))
     elif option == "5":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "5")
+        predictor.get_image_predict('user_photo.jpg', "5", int(coef))
     elif option == "6":
         predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "6")
+        predictor.get_image_predict('user_photo.jpg', "6", int(coef))
         
     
     res_photo = open('res_photo.jpg', 'rb')
@@ -119,6 +123,7 @@ def main():
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, get_style))
+    dp.add_handler(MessageHandler(Filters.text, get_coef))
     dp.add_handler(MessageHandler(Filters.photo, get_photo))
 
     # on noncommand i.e message - echo the message on Telegram
