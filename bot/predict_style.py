@@ -90,7 +90,7 @@ class Predictor:
             style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
         content_weight = 1           # coefficient for content loss
-        style_weight = 10000           # coefficient for style loss
+        style_weight = 5000           # coefficient for style loss
         content_layers = ('conv_4',)  # use these layers for content loss
         style_layers = ('conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5')
 
