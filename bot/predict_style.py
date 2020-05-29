@@ -77,20 +77,30 @@ class Predictor:
         img_tensor = image_loader(img_path).type(torch.FloatTensor)
         
         if option == "1":
-            style_img = image_loader("universe.jpg").type(torch.FloatTensor)
+            style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
+            style_weight = 2000
+            #style_img = image_loader("universe.jpg").type(torch.FloatTensor)
         if option == "2":
             style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
+            style_weight = 1000
         if option == "3":
             style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
+            style_weight = 1000
         if option == "4":
-            style_img = image_loader("matiss.jpg").type(torch.FloatTensor)
+            style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
+            style_weight = 2000
+            #style_img = image_loader("matiss.jpg").type(torch.FloatTensor)
         if option == "5":
-            style_img = image_loader("Simpsons.jpg").type(torch.FloatTensor)
+            style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
+            style_weight = 500
+            #style_img = image_loader("Simpsons.jpg").type(torch.FloatTensor)
         if option == "6":
-            style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
+            style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
+            style_weight = 5000
+            #style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
         content_weight = 1           # coefficient for content loss
-        style_weight = 5000           # coefficient for style loss
+        #style_weight = 2000           # coefficient for style loss
         content_layers = ('conv_4',)  # use these layers for content loss
         style_layers = ('conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5')
 
