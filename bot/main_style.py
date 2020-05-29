@@ -108,7 +108,7 @@ def main():
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, get_style))
-    dp.add_handler(MessageHandler(Filters.number, get_coef))
+    dp.add_handler(MessageHandler(Filters.text, get_coef))
     dp.add_handler(MessageHandler(Filters.photo, get_photo))
 
     # on noncommand i.e message - echo the message on Telegram
