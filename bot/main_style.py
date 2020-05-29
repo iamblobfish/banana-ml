@@ -83,28 +83,13 @@ def get_photo(update, context):
     update.message.reply_text('Nice! Got your photo, styling...')
     
     # load saved photo
-
+    global coef
     # send photo
     global option
-    if option == "1":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "1", int(coef))
-    elif option == "2":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "2", int(coef))
-    elif option == "3":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "3", int(coef))
-    elif option == "4":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "4", int(coef))
-    elif option == "5":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "5", int(coef))
-    elif option == "6":
-        predictor = Predictor()
-        predictor.get_image_predict('user_photo.jpg', "6", int(coef))
-        
+    predictor = Predictor()
+    if option in ['1', '2', '3', '4', '5', '6']:
+      predictor.get_image_predict('user_photo.jpg', option, int(coef))
+       
     
     res_photo = open('res_photo.jpg', 'rb')
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=res_photo)
