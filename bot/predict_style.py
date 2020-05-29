@@ -72,7 +72,7 @@ class Predictor:
     def __init__(self):
         self.model = nn.Sequential()
 
-    def get_image_predict(self, img_path='img_path.jpg', option="1",style_weight ):
+    def get_image_predict(self, img_path='img_path.jpg', option="1",style_weight = 500 ):
 
         img_tensor = image_loader(img_path).type(torch.FloatTensor)
         
