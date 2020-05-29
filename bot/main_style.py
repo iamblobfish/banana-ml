@@ -69,7 +69,7 @@ def get_style(update, context):
     update.message.reply_text('Good! Now input coef')
 def get_coef(update, context):
     global coef
-    coef = update.message.text
+    coef = update.message.number
     update.message.reply_text('Good! Now send me a pic :)')
     
 def get_photo(update, context):
@@ -123,7 +123,7 @@ def main():
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, get_style))
-    dp.add_handler(MessageHandler(Filters.text, get_coef))
+    dp.add_handler(MessageHandler(Filters.number, get_coef))
     dp.add_handler(MessageHandler(Filters.photo, get_photo))
 
     # on noncommand i.e message - echo the message on Telegram
