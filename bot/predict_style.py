@@ -72,32 +72,22 @@ class Predictor:
     def __init__(self):
         self.model = nn.Sequential()
 
-    def get_image_predict(self, img_path='img_path.jpg', option="1"):
+    def get_image_predict(self, img_path='img_path.jpg', option="1",style_weight ):
 
         img_tensor = image_loader(img_path).type(torch.FloatTensor)
         
         if option == "1":
-            style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
-            style_weight = 2000
-            #style_img = image_loader("universe.jpg").type(torch.FloatTensor)
+            style_img = image_loader("universe.jpg").type(torch.FloatTensor)
         if option == "2":
             style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
-            style_weight = 1000
         if option == "3":
             style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
-            style_weight = 1000
         if option == "4":
-            style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
-            style_weight = 2000
-            #style_img = image_loader("matiss.jpg").type(torch.FloatTensor)
+            style_img = image_loader("matiss.jpg").type(torch.FloatTensor)
         if option == "5":
-            style_img = image_loader("starry_night.jpg").type(torch.FloatTensor)
-            style_weight = 500
-            #style_img = image_loader("Simpsons.jpg").type(torch.FloatTensor)
+            style_img = image_loader("Simpsons.jpg").type(torch.FloatTensor)
         if option == "6":
-            style_img = image_loader("mondrian.jpg").type(torch.FloatTensor)
-            style_weight = 5000
-            #style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
+            style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
         content_weight = 1           # coefficient for content loss
         #style_weight = 2000           # coefficient for style loss
