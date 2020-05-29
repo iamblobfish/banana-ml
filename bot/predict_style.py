@@ -89,7 +89,7 @@ class Predictor:
         if option == "6":
             style_img = image_loader("renuar.jpg").type(torch.FloatTensor)
         
-        content_weight = 20            # coefficient for content loss
+        content_weight = 1            # coefficient for content loss
         style_weight = 1000           # coefficient for style loss
         content_layers = ('conv_4',)  # use these layers for content loss
         style_layers = ('conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5')
@@ -148,7 +148,7 @@ class Predictor:
         input_image = Variable(img_tensor.clone().data, requires_grad=True)
         optimizer = torch.optim.LBFGS([input_image])
         
-        num_steps = 400
+        num_steps = 500
 
         for i in range(num_steps):
             # correct the values of updated input image
