@@ -14,7 +14,7 @@ from matplotlib.pyplot import imread
 from skimage.transform import resize
 
 def image_loader(image_name):
-    image = resize(imread(image_name), [128, 128])
+    image = resize(imread(image_name), [256, 256])
     image = image.transpose([2,0,1]) / image.max()
     image = Variable(torch.FloatTensor(image))
     # fake batch dimension required to fit network's input dimensions
@@ -148,7 +148,7 @@ class Predictor:
         input_image = Variable(img_tensor.clone().data, requires_grad=True)
         optimizer = torch.optim.LBFGS([input_image])
         
-        num_steps = 500
+        num_steps = 400
 
         for i in range(num_steps):
             # correct the values of updated input image
